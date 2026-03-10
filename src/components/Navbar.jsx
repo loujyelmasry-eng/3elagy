@@ -17,7 +17,7 @@ export default function Navbar() {
     <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>
 
     <div className="logo">
-      <img src="/src/assets/logo.jpeg" alt="3elagy Logo" />
+    <img src="/logo.jpeg" alt="3elagy Logo" />
     </div>
 
       <div className="nav-links">
