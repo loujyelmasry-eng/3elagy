@@ -17,8 +17,11 @@
   }
   
   .auth-logo{
-    width:60px;
+    width:70px;
     margin-bottom:15px;
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
   }
   
   .auth-card h2{

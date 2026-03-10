@@ -10,7 +10,7 @@ function Footer() {
 
         {/* Logo */}
         <Link to="/" className="footer-modern-logo">
-          <img src="/src/assets/logo.jpeg" alt="3elagy Logo" />
+        <img src="/logo.jpeg" alt="3elagy Logo" />
         </Link>
 
         {/* Links */}

@@ -101,7 +101,7 @@ export default function Signup() {
 
       <div className="auth-card">
 
-        <img src="/src/assets/logo.jpeg" className="auth-logo" />
+      <img src="/logo.jpeg" alt="3elagy Logo" className="auth-logo" />
 
         <h2>Create Account</h2>
         <p>Join the 3elagy healthcare system</p>
