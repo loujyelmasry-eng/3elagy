@@ -26,19 +26,19 @@ function Footer() {
         <ul className="footer-modern-social">
           <li>
             <a href="https://www.facebook.com/share/1Zeza5DA3z/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">
-              <Facebook size={50}/>
+              <Facebook size={30}/>
             </a>
           </li>
 
           <li>
             <a href="https://www.instagram.com/3elagy_" target="_blank" rel="noopener noreferrer">
-              <Instagram size={50}/>
+              <Instagram size={30}/>
             </a>
           </li>
 
           <li>
             <a href="https://www.tiktok.com/@3elagy" target="_blank" rel="noopener noreferrer">
-              <Music2 size={50}/>
+              <Music2 size={30}/>
             </a>
           </li>
         </ul>
