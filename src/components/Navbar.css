@@ -1,0 +1,109 @@
+/* Navbar */
+.navbar {
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    border-bottom: 1px solid #e6edf7;
+    background: #fff;
+  
+    /* keeps dropdown above page sections */
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    overflow: visible;
+  }
+  
+  .logo img{
+    height:50px;
+    cursor:pointer;
+    }
+  
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+  }
+  
+  .nav-links a,
+  .dropdown-trigger {
+    font-weight: 600;
+    color: #0f172a;
+    padding: 10px 12px;
+    border-radius: 12px;
+  }
+  
+  .nav-links a:hover,
+  .dropdown:hover .dropdown-trigger {
+    background: #eff6ff;
+    color: #2563eb;
+  }
+  
+  /* Dropdown */
+  .dropdown {
+    position: relative;
+  }
+  
+  .dropdown-trigger {
+    cursor: default; /* since it’s hover */
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    min-width: 220px;
+    background: #fff;
+    border: 1px solid #e6edf7;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    padding: 10px;
+    display: none;
+    z-index: 10000;
+  }
+  
+  /* IMPORTANT: keep it open when hovering trigger OR menu */
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
+  
+  .dropdown-menu a {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    color: #0f172a;
+  }
+  
+  .dropdown-menu a:hover {
+    background: #f1f5ff;
+    color: #2563eb;
+  }
+  
+  /* Profile button */
+  .profile-btn {
+    background: #2563eb;
+    color: #fff !important;
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-weight: 700;
+  }
+  
+  .profile-btn:hover {
+    background: #1d4ed8;
+  }
+  /* Navbar upgrade */
+.navbar{
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    backdrop-filter: blur(10px);
+    background: rgba(255,255,255,0.9);
+    border-bottom: 1px solid #e6edf7;
+    transition: box-shadow 0.2s ease;
+  }
+  
+  .navbar.scrolled{
+    box-shadow: 0 10px 30px rgba(15,23,42,0.08);
+  }

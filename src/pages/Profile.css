@@ -1,0 +1,74 @@
+.profile-container{
+    padding:40px 80px;
+    background:#f8fafc;
+    min-height:100vh;
+    }
+    
+    .profile-header{
+    text-align:center;
+    margin-bottom:40px;
+    }
+    
+    .profile-avatar{
+    width:80px;
+    height:80px;
+    background:#3b6fb6;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    margin:auto;
+    margin-bottom:15px;
+    }
+    
+    .profile-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+    }
+    
+    .profile-card{
+    background:white;
+    border-radius:12px;
+    padding:25px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.05);
+    }
+    
+    .info-row{
+    display:flex;
+    gap:15px;
+    align-items:center;
+    margin-bottom:15px;
+    }
+    
+    .timeline-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+    }
+    
+    .record{
+    display:flex;
+    gap:15px;
+    margin-bottom:15px;
+    }
+    
+    .request{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:15px;
+    }
+    
+    .status{
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:12px;
+    }
+    
+    .normal{background:#e6f0ff;color:#3b6fb6;}
+    .completed{background:#f3f4f6;}
+    .pending{background:#fff4cc;}
+    .found{background:#e6f9f0;color:#2b8a3e;}
+    .visited{background:#e6f9f0;color:#2b8a3e;}

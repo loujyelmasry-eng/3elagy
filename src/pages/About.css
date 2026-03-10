@@ -1,0 +1,190 @@
+/* HEADER */
+
+.about-header{
+    text-align:center;
+    padding:60px 20px 40px;
+  }
+  
+  .about-header h1{
+    font-size:56px;
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  
+  .about-header p{
+    color:#6b7280;
+    font-size:18px;
+  }
+  
+  /* MISSION + VISION */
+  
+  .about-mission{
+    padding-bottom:60px;
+  }
+  
+  .mission-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:50px;
+  
+    max-width:1100px;
+    margin:auto;
+  }
+  
+  .mission-card{
+    background:#f8fbff;
+    border:1px solid #e5edf7;
+    border-radius:22px;
+    padding:45px;
+    transition:all .25s ease;
+  
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  
+  .mission-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 18px 40px rgba(0,0,0,.08);
+  }
+  
+  .mission-card h3{
+    margin:15px 0 10px;
+    font-size:22px;
+  }
+  
+  .mission-card p{
+    color:#6b7280;
+    line-height:1.7;
+  }
+  
+  
+  /* ICON BOX */
+  
+  .icon{
+    width:60px;
+    height:60px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  
+    margin-bottom:10px;
+  }
+  
+  .blue{
+    background:#2563eb;
+    color:white;
+  }
+  
+  .gold{
+    background:#caa861;
+    color:white;
+  }
+  
+  
+  /* VALUES */
+  
+  .about-values{
+    padding:40px 20px 120px;
+  }
+  
+  .about-values h2{
+    text-align:center;
+    font-size:34px;
+    margin-bottom:35px;
+  }
+  
+  .values-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:35px;
+  
+    max-width:1100px;
+    margin:auto;
+  }
+  
+  .value-card{
+    background:#f9fbff;
+    border:1px solid #e6edf7;
+    border-radius:22px;
+    padding:35px;
+  
+    text-align:center;
+  
+    transition:all .25s ease;
+  }
+  
+  .value-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 18px 40px rgba(0,0,0,.08);
+  }
+  
+  .value-icon{
+    width:55px;
+    height:55px;
+  
+    margin:auto;
+    margin-bottom:15px;
+  
+    border-radius:50%;
+    background:#edf3fb;
+  
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  
+    color:#2563eb;
+  }
+  
+  .value-card h4{
+    font-size:18px;
+    margin-bottom:6px;
+  }
+  
+  .value-card p{
+    font-size:14px;
+    color:#6b7280;
+    line-height:1.6;
+  }
+  
+  
+  /* STORY SECTION */
+  
+  .about-story{
+    padding:0 20px 120px;
+  }
+  
+  .story-box{
+    max-width:1000px;
+    margin:auto;
+    padding:80px 70px;
+  
+    border-radius:28px;
+  
+    background:linear-gradient(135deg,#2b6cb0,#7aa2d6);
+    color:white;
+    text-align:center;
+  }
+  
+  .story-box h2{
+    font-size:30px;
+    margin:20px 0;
+  }
+  
+  .story-box p{
+    max-width:650px;
+    margin:auto;
+    line-height:1.7;
+    opacity:.95;
+  }
+  
+  .heart{
+    display:flex;
+    justify-content:center;
+    margin-bottom:20px;
+  }
+  
+  .heart svg{
+    color:white;
+  }

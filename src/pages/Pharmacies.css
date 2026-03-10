@@ -1,0 +1,218 @@
+.medicine-search{
+    margin:30px auto;
+    max-width:600px;
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    }
+    
+    .medicine-search input{
+    flex:1;
+    padding:12px 15px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    font-size:14px;
+    }
+    
+    .medicine-search button{
+    background:#2967AE;
+    color:white;
+    border:none;
+    padding:12px 22px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+    }
+    .pharmacy-card{
+        background:white;
+        border-radius:14px;
+        padding:20px;
+        border:1px solid #eee;
+        box-shadow:0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .pharmacy-card{
+            position:relative;
+            background:white;
+            padding:26px;
+            border-radius:14px;
+            box-shadow:0 4px 16px rgba(0,0,0,0.08);
+            text-align:center;
+            display:flex;
+            flex-direction:column;
+            gap:8px;
+            min-height:240px;
+            }
+        .pharmacy-card:hover{
+            transform:translateY(-4px);
+            box-shadow:0 8px 20px rgba(0,0,0,0.08);
+            transition:0.2s;
+            }
+            .pharmacy-grid{
+                display:grid;
+                grid-template-columns:repeat(2,1fr);
+                gap:28px;
+                margin-top:40px;
+                }
+            .pharmacy-card{
+                transition:0.25s ease;
+                }
+                
+                .pharmacy-card:hover{
+                transform:translateY(-6px);
+                box-shadow:0 12px 30px rgba(0,0,0,0.12);
+                }
+                .nearby-wrapper{
+                    display:flex;
+                    justify-content:center;
+                    margin:20px 0 30px;
+                    }
+                    .medicine-filter{
+                        margin-top:10px;
+                        font-size:16px;
+                        color:#4b5563;
+                        text-align:center;
+                        }
+                        
+                        .medicine-filter strong{
+                        color:#2f66a3;
+                        }
+                        .nearby-btn{
+                            display:flex;
+                            align-items:center;
+                            gap:8px;
+                            background:#2f66a3;
+                            color:white;
+                            border:none;
+                            padding:12px 22px;
+                            border-radius:10px;
+                            font-size:15px;
+                            font-weight:500;
+                            cursor:pointer;
+                            transition:all 0.2s ease;
+                            }
+                            
+                            .nearby-btn:hover{
+                            background:#254f80;
+                            transform:translateY(-1px);
+                            box-shadow:0 4px 10px rgba(0,0,0,0.1);
+                            }
+                            
+                            .nearby-wrapper{
+                            display:flex;
+                            justify-content:center;
+                            margin:20px 0 30px;
+                            }
+            .buttons{
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                gap:12px;
+                margin-top:18px;
+                }
+
+                .call-btn{
+                    background:#2f66a3;
+                    color:white;
+                    border:none;
+                    padding:12px 24px;
+                    border-radius:10px;
+                    font-weight:500;
+                    display:flex;
+                    align-items:center;
+                    gap:6px;
+                    cursor:pointer;
+                    }
+                    
+                    .direction-btn{
+                    background:white;
+                    border:1.5px solid #d6b77a;
+                    color:#b28b3f;
+                    padding:12px 24px;
+                    border-radius:10px;
+                    font-weight:500;
+                    display:flex;
+                    align-items:center;
+                    gap:6px;
+                    cursor:pointer;
+                    }
+                    
+                    .direction-btn:hover{
+                    background:#faf7ef;
+                    }
+            
+        .call{
+        background:#2967AE;
+        color:white;
+        border:none;
+        padding:10px 16px;
+        border-radius:6px;
+        cursor:pointer;
+        }
+        
+        .direction{
+        background:white;
+        border:1px solid #2967AE;
+        color:#2967AE;
+        padding:10px 16px;
+        border-radius:6px;
+        cursor:pointer;
+        }
+        .pharmacy-container{
+            max-width:1100px;
+            margin:auto;
+            padding:60px 20px;
+            text-align:center;
+            }
+            
+            .pharmacy-title{
+            font-size:32px;
+            font-weight:700;
+            margin-bottom:5px;
+            }
+            
+            .pharmacy-subtitle{
+            color:#666;
+            margin-bottom:25px;
+            }
+            .status{
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                gap:8px;
+                margin-top:10px;
+                font-weight:500;
+                color:#374151;
+                }
+                
+                .dot{
+                width:10px;
+                height:10px;
+                border-radius:50%;
+                display:inline-block;
+                }
+                
+                .dot.open{
+                background:#16a34a;
+                }
+                
+                .dot.closed{
+                background:#dc2626;
+                }
+                .badge{
+                    position:absolute;
+                    top:18px;
+                    right:18px;
+                    background:#f6e7c4;
+                    color:#9c7a34;
+                    padding:6px 12px;
+                    border-radius:20px;
+                    font-size:12px;
+                    font-weight:500;
+                    }
+                    .map-box{
+                        margin-top:30px;
+                        border-radius:14px;
+                        overflow:hidden;
+                        box-shadow:0 6px 20px rgba(0,0,0,0.1);
+                        }
