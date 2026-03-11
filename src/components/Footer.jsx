@@ -45,7 +45,7 @@ function Footer() {
 
         {/* Copyright */}
         <p className="footer-modern-copy">
-          © 2025 3elagy. All rights reserved.
+          © 2026 3elagy. All rights reserved.
         </p>
 
       </div>

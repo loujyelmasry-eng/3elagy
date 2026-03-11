@@ -68,7 +68,8 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 30px;
             margin-top: 30px;
-          }.tests-grid {
+          }
+          .tests-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
@@ -235,5 +236,108 @@
                     background:#214a84;
                     transform:scale(1.03);
                     }
+                    .lab-container{
+                        max-width:1100px;
+                        margin:auto;
+                        padding:40px 20px;
+                        }
+                        
+                        .lab-title{
+                        font-size:32px;
+                        font-weight:700;
+                        margin-bottom:30px;
+                        text-align:center;
+                        }
+                        
+                        .lab-grid{
+                        display:grid;
+                        grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+                        gap:25px;
+                        }
+                        
+                        .lab-card{
+                        background:white;
+                        padding:25px;
+                        border-radius:12px;
+                        box-shadow:0 5px 15px rgba(0,0,0,0.08);
+                        transition:0.2s;
+                        }
+                        
+                        .lab-card:hover{
+                        transform:translateY(-5px);
+                        }
+                        
+                        .lab-name{
+                        font-size:20px;
+                        font-weight:600;
+                        margin-bottom:10px;
+                        }
+                        
+                        .lab-info{
+                        margin:6px 0;
+                        color:#555;
+                        }
+                        
+                        .direction-btn{
+                        margin-top:15px;
+                        padding:10px 16px;
+                        background:#2967AE;
+                        color:white;
+                        border:none;
+                        border-radius:8px;
+                        cursor:pointer;
+                        }
+                        .lab-search{
+                            display:flex;
+                            justify-content:center;
+                            margin-bottom:30px;
+                            }
+                            
+                            .lab-search input{
+                            width:400px;
+                            padding:12px 15px;
+                            border-radius:8px;
+                            border:1px solid #ccc;
+                            font-size:16px;
+                            outline:none;
+                            }
+                            
+                            .lab-search input:focus{
+                            border-color:#2967AE;
+                            }
+                            .search-btn{
+                                padding:12px 20px;
+                                margin-left:10px;
+                                background:#2967AE;
+                                color:white;
+                                border:none;
+                                border-radius:8px;
+                                cursor:pointer;
+                                font-weight:500;
+                                }
+                                
+                                .search-btn:hover{
+                                background:#1f4f87;
+                                }
+
+                                .search-box{
+                                    display:flex;
+                                    justify-content:center;
+                                    margin:25px 0;
+                                    }
+                                    
+                                    .search-box input{
+                                    width:320px;
+                                    padding:10px 14px;
+                                    border-radius:8px;
+                                    border:1px solid #ddd;
+                                    font-size:15px;
+                                    }
+
+                                    .lab-subtitle{
+                                        text-align:center;
+                                        color:#6b7280;
+                                        margin-bottom:20px;
+                                        }
 
                 

@@ -12,12 +12,12 @@ function Services() {
       desc: "Find medications and check real-time availability in nearby pharmacies.",
       link: "/medicine-search",
     },
-    {
-      icon: <MapPin size={32} />,
-      title: "Pharmacy Locator",
-      desc: "Locate pharmacies near you and view opening hours and available medicines.",
-      link: "/pharmacies",
-    },
+    // {
+    //   icon: <MapPin size={32} />,
+    //   title: "Pharmacy Locator",
+    //   desc: "Locate pharmacies near you and view opening hours and available medicines.",
+    //   link: "/pharmacies",
+    // },
     {
       icon: <Droplet size={32} />,
       title: "Blood Requests",

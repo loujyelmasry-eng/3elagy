@@ -12,6 +12,8 @@ import LabTests from "./pages/LabTests";
 import Contact from "./pages/Contact";
 import Services from "./pages/Services";
 import LabBooking from "./pages/LabBooking";
+import AdminLogin from "./pages/AdminLogin";
+import AdminDashboard from "./pages/AdminDashboard";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -51,7 +53,8 @@ export default function App() {
         <Route path="/lab-booking" element={<LabBooking />} />
         <Route path="/services" element={<Services />} />
         <Route path="/contact" element={<Contact />} />
-
+        <Route path="/admin-login" element={<AdminLogin />} />
+        <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
     </BrowserRouter>
   );

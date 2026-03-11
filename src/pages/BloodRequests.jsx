@@ -1,128 +1,110 @@
+import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { db } from "../services/firebase";
+import { collection, getDocs } from "firebase/firestore";
 import "./BloodRequests.css";
-import { Droplet, Info } from "lucide-react";
 
-function BloodRequests() {
-  return (
-    <>
-      <Navbar />
+function BloodRequests(){
 
-      <div className="blood-container">
+const [banks,setBanks] = useState([]);
+const [selectedBloodType,setSelectedBloodType] = useState("");
 
-        {/* HEADER */}
+useEffect(()=>{
 
-        <div className="blood-header">
+const fetchBanks = async () => {
 
-          <div className="blood-icon">
-            <Droplet size={32} />
-          </div>
+const querySnapshot = await getDocs(collection(db,"blood banks"));
 
-          <h1>Blood Request Portal</h1>
+const data = querySnapshot.docs.map(doc => ({
+id: doc.id,
+...doc.data()
+}));
 
-          <p>Request blood to save lives</p>
+setBanks(data);
 
-        </div>
+};
 
-        {/* INFO BOX */}
+fetchBanks();
 
-        <div className="info-box">
+},[]);
 
-          <Info size={20} />
 
-          <div>
-            <h4>Important Information</h4>
-            <p>
-              Submit your blood request and we will notify hospitals, blood banks,
-              and registered donors in your area. Please ensure all information
-              is accurate. Emergency requests are prioritized.
-            </p>
-          </div>
+return(
 
-        </div>
+<>
+<Navbar/>
 
-        {/* FORM */}
+<div className="blood-container">
 
-        <div className="blood-form">
+<h2 className="blood-title">Available Blood Banks</h2>
 
-          <h2>Submit Blood Request</h2>
+<div className="blood-filter">
 
-          <form>
+<select
+value={selectedBloodType}
+onChange={(e)=>setSelectedBloodType(e.target.value)}
+>
 
-            <label>Patient Name *</label>
-            <input type="text" placeholder="Patient name" />
+<option value="">All Blood Types</option>
+<option value="A+">A+</option>
+<option value="A-">A-</option>
+<option value="B+">B+</option>
+<option value="B-">B-</option>
+<option value="AB+">AB+</option>
+<option value="AB-">AB-</option>
+<option value="O+">O+</option>
+<option value="O-">O-</option>
 
-            <div className="form-row">
+</select>
 
-              <div>
-                <label>Blood Type *</label>
+</div>
 
-                <select>
-                  <option>Select blood type</option>
-                  <option>A+</option>
-                  <option>A-</option>
-                  <option>B+</option>
-                  <option>B-</option>
-                  <option>AB+</option>
-                  <option>AB-</option>
-                  <option>O+</option>
-                  <option>O-</option>
-                </select>
-              </div>
 
-              <div>
-                <label>Units Needed *</label>
-                <input type="number" placeholder="Units" />
-              </div>
+<div className="blood-grid">
 
-            </div>
+{banks
+.filter(bank =>
+selectedBloodType === "" || bank.blood_type === selectedBloodType
+)
+.map((bank,index)=>(
 
-            <label>Hospital Name *</label>
-            <input type="text" placeholder="Hospital name where blood is needed" />
+<div className="blood-card" key={index}>
 
-            <label>City *</label>
-            <input type="text" placeholder="City or location" />
+<h3 className="blood-name">{bank.blood_bank_name}</h3>
 
-            <label>Contact Number *</label>
-            <input type="text" placeholder="+20 XXX XXX XXXX" />
+<p><strong>Blood Type:</strong> {bank.blood_type}</p>
+<p><strong>Component:</strong> {bank.component}</p>
+<p><strong>City:</strong> {bank.city}</p>
+<p><strong>Units Available:</strong> {bank.units_available}</p>
+<p><strong>Price:</strong> {bank.price_egp} EGP</p>
 
-            <small>This number will be shared with potential donors</small>
+<a
+href={bank.google_maps_link}
+target="_blank"
+rel="noreferrer"
+>
 
-            <label>Additional Notes</label>
-            <textarea
-              placeholder="Any additional information (urgency level, visiting hours, etc.)"
-            />
+<button className="direction-btn">
+Get Directions
+</button>
 
-            <button className="submit-btn">
-              <Droplet size={18} />
-              Submit Request
-            </button>
+</a>
 
-          </form>
+</div>
 
-        </div>
+))}
 
-        {/* BOTTOM INFO */}
+</div>
 
-        <div className="blood-footer-card">
+</div>
 
-          <Droplet size={28} />
+<Footer/>
 
-          <h3>Every Request Matters</h3>
+</>
 
-          <p>
-            Your blood request will be shared with verified hospitals,
-            blood banks, and registered donors. We work to connect patients
-            with donors as quickly as possible to save lives.
-          </p>
+);
 
-        </div>
-
-      </div>
-
-      <Footer />
-    </>
-  );
 }
 
 export default BloodRequests;

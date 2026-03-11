@@ -30,7 +30,7 @@ export default function Navbar() {
 </Link>
           <div className="dropdown-menu">
             <Link to="/medicine-search">Medicine Search</Link>
-            <Link to="/pharmacies">Pharmacies</Link>
+            
             <Link to="/blood-requests">Blood Requests</Link>
             <Link to="/lab-tests">Lab Tests</Link>
           </div>

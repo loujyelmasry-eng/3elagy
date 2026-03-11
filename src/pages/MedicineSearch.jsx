@@ -1,115 +1,110 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "./MedicineSearch.css";
 import { Search, Pill } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import pharmaciesData from "../data/pharmaciesData";
+import { db } from "../services/firebase";
+import { collection, getDocs } from "firebase/firestore";
 
-function MedicineSearch(){
+function MedicineSearch() {
+  const navigate = useNavigate();
 
-const navigate = useNavigate();
+  const [search, setSearch] = useState("");
+  const [medicines, setMedicines] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-const [search,setSearch] = useState("");
+  useEffect(() => {
+    const fetchMedicines = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "medicines"));
 
-const medicines = [...new Set(
-  pharmaciesData.flatMap(p => p.medicines)
-  )].map(med => ({
-  
-  name:med,
-  description:"Available in partner pharmacies",
-  
-  pharmacies:pharmaciesData
-  .filter(p => p.medicines.includes(med))
-  .map(p => p.name)
-  
-  }));
-const filtered = medicines.filter(m =>
-m.name.toLowerCase().includes(search.toLowerCase())
-);
+        const data = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
 
-return(
+        setMedicines(data);
+      } catch (error) {
+        console.error("Error fetching medicines:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-<>
-<Navbar/>
+    fetchMedicines();
+  }, []);
 
-<div className="medicine-container">
+  const displayedMedicines = medicines.filter((med) =>
+    med.medicine_name?.toLowerCase().includes(search.toLowerCase().trim())
+  );
 
-<h2>Search Medicines</h2>
+  return (
+    <>
+      <Navbar />
 
-<p>Find medications and check availability</p>
+      <div className="medicine-container">
+        <h2>Search Medicines</h2>
+        <p>Find medications and check availability</p>
 
-<div className="search-box">
+        <div className="search-box">
+          <Search size={18} className="search-icon" />
 
-<Search size={18} className="search-icon"/>
+          <input
+            placeholder="Search medicines..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
 
-<input
-placeholder="Search medicines..."
-value={search}
-onChange={(e)=>setSearch(e.target.value)}
-/>
+          <button type="button">Search</button>
+        </div>
 
-<button>
-Search
-</button>
+        <div className="medicine-results">
+          {loading ? (
+            <p>Loading medicines...</p>
+          ) : displayedMedicines.length > 0 ? (
+            displayedMedicines.map((med) => (
+              <div className="medicine-card" key={med.id}>
+                <div className="medicine-header">
+                  <Pill size={20} className="pill-icon" />
+                  <h3>{med.medicine_name}</h3>
+                </div>
 
-</div>
+                <p className="medicine-desc">
+                  {med.active_ingredient} - {med.category}
+                </p>
 
-<div className="medicine-results">
+                <div className="pharmacy-list">
+                  <strong>Available at:</strong>
+                  <ul>
+                    <li>{med.pharmacy}</li>
+                  </ul>
 
-{filtered.map((med,index)=>(
+                  <p><strong>City:</strong> {med.city}</p>
+                  <p><strong>Dosage:</strong> {med.dosage}</p>
+                  <p><strong>Price:</strong> {med.price_egp} EGP</p>
+                  <p><strong>Stock:</strong> {med.stock}</p>
+                </div>
 
-<div className="medicine-card" key={index}>
+                <button
+                  className="view-btn"
+                  onClick={() =>
+                    navigate(`/pharmacies?medicine=${encodeURIComponent(med.medicine_name)}`)
+                  }
+                >
+                  View Pharmacies
+                </button>
+              </div>
+            ))
+          ) : (
+            <p>No medicines found.</p>
+          )}
+        </div>
+      </div>
 
-<div className="medicine-header">
-
-<Pill size={20} className="pill-icon"/>
-
-<h3>{med.name}</h3>
-
-</div>
-
-<p className="medicine-desc">
-{med.description}
-</p>
-
-<div className="pharmacy-list">
-
-<strong>Available at:</strong>
-
-<ul>
-
-{med.pharmacies.map((p,i)=>(
-<li key={i}>{p}</li>
-))}
-
-</ul>
-
-</div>
-
-<button
-className="view-btn"
-onClick={()=>navigate(`/pharmacies?medicine=${med.name}`)}
->
-
-View Pharmacies
-
-</button>
-
-</div>
-
-))}
-
-</div>
-
-</div>
-
-<Footer/>
-
-</>
-
-);
-
+      <Footer />
+    </>
+  );
 }
 
 export default MedicineSearch;

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const services = [
   { title: "Medicine Search", desc: "Find medications and alternatives with real-time availability", to: "/medicine-search", icon: "💊" },
-  { title: "Pharmacy Locator", desc: "Locate nearby pharmacies with stock information", to: "/pharmacies", icon: "📍" },
+  // { title: "Pharmacy Locator", desc: "Locate nearby pharmacies with stock information", to: "/pharmacies", icon: "📍" },
   { title: "Blood Requests", desc: "Request or donate blood quickly and safely", to: "/blood-requests", icon: "🩸" },
   { title: "Lab Tests", desc: "Book lab tests and view results online", to: "/lab-tests", icon: "🧪" },
   { title: "Medical Records", desc: "Access your health history anytime, anywhere", to: "/profile", icon: "📄" },

@@ -35,3 +35,32 @@
     border-radius: 8px;
     background-color: white;
   }
+  .home-map {
+    max-width: 700px;
+    margin: 0 auto;
+    margin-bottom: 120px;
+  }
+  
+    
+    .map-title{
+    text-align:center;
+    font-size:32px;
+    margin-bottom:25px;
+    font-weight:600;
+    }
+    
+    .home-map button {
+      padding: 8px 16px;
+      margin: 0 6px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      background: white;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    
+    .home-map button:hover {
+      background: #2967AE;
+      color: white;
+      border-color: #2967AE;
+    }
