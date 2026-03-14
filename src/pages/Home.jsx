@@ -7,10 +7,10 @@ import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../services/firebase";
-
+import { auth } from "../services/firebase";
+import { useNavigate } from "react-router-dom";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 
@@ -47,7 +47,17 @@ export default function Home() {
   const [labs, setLabs] = useState([]);
   const [banks, setBanks] = useState([]);
   const [filter, setFilter] = useState("all");
+  const navigate = useNavigate();
 
+  useEffect(() => {
+  
+    const user = auth.currentUser;
+  
+    if (!user) {
+      navigate("/login");
+    }
+  
+  }, []);
   /* Fetch data from Firestore */
 
   useEffect(() => {

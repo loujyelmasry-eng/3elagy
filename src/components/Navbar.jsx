@@ -2,10 +2,21 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
+import { signOut } from "firebase/auth";
+import { auth } from "../services/firebase";
+import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
 
+  const handleLogout = async () => {
+  
+    await signOut(auth);
+  
+    navigate("/login");
+  
+  };
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
     onScroll();
@@ -38,7 +49,9 @@ export default function Navbar() {
 
         <Link to="/contact">Contact</Link>
       </div>
-
+      <button onClick={handleLogout} className="logout-btn">
+  Logout
+</button>
       <Link className="profile-btn" to="/profile">Profile</Link>
     </nav>
   );

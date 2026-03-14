@@ -2,8 +2,33 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "./Profile.css";
 import { User, Mail, Phone, Droplet, FileText, TestTube, Activity } from "lucide-react";
-
+import { useEffect, useState } from "react";
+import { auth, db } from "../services/firebase";
+import { doc, getDoc } from "firebase/firestore";
 function Profile() {
+  const [userData, setUserData] = useState(null);
+  useEffect(() => {
+
+    const fetchUser = async () => {
+  
+      const user = auth.currentUser;
+  
+      if (user) {
+  
+        const docRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(docRef);
+  
+        if (docSnap.exists()) {
+          setUserData(docSnap.data());
+        }
+  
+      }
+  
+    };
+  
+    fetchUser();
+  
+  }, []);
   return (
     <>
       <Navbar />
@@ -35,7 +60,7 @@ function Profile() {
               <User size={18}/>
               <div>
                 <span>Name</span>
-                <p>Ahmed Mohamed</p>
+                <p>{userData?.name}</p>
               </div>
             </div>
 
@@ -43,7 +68,7 @@ function Profile() {
               <Mail size={18}/>
               <div>
                 <span>Email</span>
-                <p>ahmed.mohamed@example.com</p>
+                <p>{userData?.email}</p>
               </div>
             </div>
 
@@ -51,7 +76,7 @@ function Profile() {
               <Phone size={18}/>
               <div>
                 <span>Phone</span>
-                <p>+20 100 123 4567</p>
+                <p>{userData?.phone}</p>
               </div>
             </div>
 
@@ -59,7 +84,7 @@ function Profile() {
               <Droplet size={18}/>
               <div>
                 <span>Blood Type</span>
-                <p>A+</p>
+                <p>{userData?.blood_type}</p>
               </div>
             </div>
 
