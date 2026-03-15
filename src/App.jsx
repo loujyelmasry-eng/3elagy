@@ -24,7 +24,8 @@ export default function App() {
     <BrowserRouter>
       <Routes>
       <Route path="/patient/:uid" element={<PatientCard/>}/>
-        <Route path="/" element={<Navigate to="/login" />} />
+      <Route path="/" element={<Login />} />
+
 
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
