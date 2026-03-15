@@ -13,6 +13,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
+import "./Home.css";
 
 /* Fix Leaflet default icon */
 
@@ -106,16 +107,41 @@ export default function Home() {
 
       <div style={{ maxWidth: "900px", margin: "60px auto" }}>
 
-        <h2 style={{ textAlign: "center" }}>Medical Map</h2>
+        <h2 style={{ textAlign: "center" }}>Map</h2>
 
         {/* FILTER BUTTONS */}
+        <div className="map-filters">
 
-        <div style={{ textAlign: "center", marginBottom: "20px" }}>
-          <button onClick={() => setFilter("all")}>All</button>
-          <button onClick={() => setFilter("pharmacy")}>Pharmacies</button>
-          <button onClick={() => setFilter("labs")}>Labs</button>
-          <button onClick={() => setFilter("banks")}>Blood Banks</button>
-        </div>
+<button
+className={`filter-btn ${filter==="all" ? "active" : ""}`}
+onClick={()=>setFilter("all")}
+>
+All
+</button>
+
+<button
+className={`filter-btn ${filter==="pharmacy" ? "active" : ""}`}
+onClick={()=>setFilter("pharmacy")}
+>
+Pharmacies
+</button>
+
+<button
+className={`filter-btn ${filter==="labs" ? "active" : ""}`}
+onClick={()=>setFilter("labs")}
+>
+Labs
+</button>
+
+<button
+className={`filter-btn ${filter==="banks" ? "active" : ""}`}
+onClick={()=>setFilter("banks")}
+>
+Blood Banks
+</button>
+
+</div>
+
 
         {/* MAP */}
 

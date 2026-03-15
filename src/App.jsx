@@ -14,18 +14,21 @@ import Services from "./pages/Services";
 import LabBooking from "./pages/LabBooking";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
-
+import BookingConfirmation from "./pages/BookingConfirmation";
 import ProtectedRoute from "./components/ProtectedRoute";
+import PatientCard from "./pages/PatientCard";
+import BloodEmergency from "./pages/BloodEmergency";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-
+      <Route path="/patient/:uid" element={<PatientCard/>}/>
         <Route path="/" element={<Navigate to="/login" />} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/blood-emergency" element={<BloodEmergency/>}/>
 
         <Route
           path="/home"
@@ -55,6 +58,10 @@ export default function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="/admin" element={<AdminDashboard />} />
+<Route
+path="/booking-confirmation"
+element={<BookingConfirmation/>}
+/>
       </Routes>
     </BrowserRouter>
   );

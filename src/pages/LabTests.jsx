@@ -4,13 +4,14 @@ import Footer from "../components/Footer";
 import { db } from "../services/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import "./LabTests.css";
+import { useNavigate } from "react-router-dom";
 
 function LabTests() {
 
 const [labs, setLabs] = useState([]);
 const [search, setSearch] = useState("");
 const [results, setResults] = useState([]);
-
+const navigate = useNavigate();
 useEffect(() => {
 
 const fetchLabs = async () => {
@@ -85,7 +86,7 @@ Search
 {results.length === 0 ? (
 
 <p className="no-results">
-No lab tests found.
+loading Lab tests....
 </p>
 
 ) : (
@@ -109,17 +110,25 @@ results.map((lab)=>(
 {lab.home_sample_available ? " Yes" : " No"}
 </p>
 
-<a
-href={lab.google_maps_link}
-target="_blank"
-rel="noreferrer"
->
+<div className="lab-buttons">
 
-<button className="direction-btn">
+<button
+className="location-btn"
+onClick={() => window.open(lab.google_maps_link, "_blank")}
+>
 📍 View Location
 </button>
 
-</a>
+
+
+<button
+className="reserve-btn"
+onClick={()=>navigate(`/lab-booking?test=${lab.test_name}&lab=${lab.lab_name}`)}
+>
+Reserve Test
+</button>
+
+</div>
 
 </div>
 

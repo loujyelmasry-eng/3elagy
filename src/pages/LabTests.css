@@ -333,11 +333,42 @@
                                     border:1px solid #ddd;
                                     font-size:15px;
                                     }
-
+                                    
                                     .lab-subtitle{
                                         text-align:center;
                                         color:#6b7280;
                                         margin-bottom:20px;
                                         }
+                                       /* BUTTON CONTAINER */
+
+.lab-buttons{
+    display:flex;
+    gap:10px;
+    margin-top:12px;
+    }
+    
+    /* BOTH BUTTONS SAME SIZE */
+    
+    .location-btn,
+    .reserve-btn{
+    flex:1;                 /* makes both buttons equal width */
+    background:#2967AE;
+    color:white;
+    border:none;
+    padding:10px 0;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:14px;
+    text-align:center;
+    transition:0.2s;
+    }
+    
+    /* HOVER */
+    
+    .location-btn:hover,
+    .reserve-btn:hover{
+    background:#1f4e84;
+    }
+    
 
                 

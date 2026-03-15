@@ -3,108 +3,156 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { db } from "../services/firebase";
 import { collection, getDocs } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 import "./BloodRequests.css";
 
-function BloodRequests(){
+function BloodRequests() {
 
-const [banks,setBanks] = useState([]);
-const [selectedBloodType,setSelectedBloodType] = useState("");
+  const [bloodBanks, setBloodBanks] = useState([]);
+  const [selectedBloodType, setSelectedBloodType] = useState("");
+  const [loading, setLoading] = useState(true);
 
-useEffect(()=>{
+  const navigate = useNavigate();
 
-const fetchBanks = async () => {
+  /* ---------------- FETCH BLOOD BANKS ---------------- */
 
-const querySnapshot = await getDocs(collection(db,"blood banks"));
+  useEffect(() => {
 
-const data = querySnapshot.docs.map(doc => ({
-id: doc.id,
-...doc.data()
-}));
+    const fetchBloodBanks = async () => {
 
-setBanks(data);
+      try {
 
-};
+        const snapshot = await getDocs(collection(db, "blood banks"));
 
-fetchBanks();
+        const banks = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
 
-},[]);
+        setBloodBanks(banks);
 
+      } catch (error) {
 
-return(
+        console.error("Error fetching blood banks:", error);
 
-<>
-<Navbar/>
+      } finally {
 
-<div className="blood-container">
+        setLoading(false);
 
-<h2 className="blood-title">Available Blood Banks</h2>
+      }
 
-<div className="blood-filter">
+    };
 
-<select
-value={selectedBloodType}
-onChange={(e)=>setSelectedBloodType(e.target.value)}
->
+    fetchBloodBanks();
 
-<option value="">All Blood Types</option>
-<option value="A+">A+</option>
-<option value="A-">A-</option>
-<option value="B+">B+</option>
-<option value="B-">B-</option>
-<option value="AB+">AB+</option>
-<option value="AB-">AB-</option>
-<option value="O+">O+</option>
-<option value="O-">O-</option>
-
-</select>
-
-</div>
+  }, []);
 
 
-<div className="blood-grid">
+  /* ---------------- FILTER BLOOD BANKS ---------------- */
 
-{banks
-.filter(bank =>
-selectedBloodType === "" || bank.blood_type === selectedBloodType
-)
-.map((bank,index)=>(
+  const filteredBanks = bloodBanks.filter(bank => {
 
-<div className="blood-card" key={index}>
+    if (!selectedBloodType) return true;
 
-<h3 className="blood-name">{bank.blood_bank_name}</h3>
+    return bank.blood_type === selectedBloodType;
 
-<p><strong>Blood Type:</strong> {bank.blood_type}</p>
-<p><strong>Component:</strong> {bank.component}</p>
-<p><strong>City:</strong> {bank.city}</p>
-<p><strong>Units Available:</strong> {bank.units_available}</p>
-<p><strong>Price:</strong> {bank.price_egp} EGP</p>
+  });
 
-<a
-href={bank.google_maps_link}
-target="_blank"
-rel="noreferrer"
->
 
-<button className="direction-btn">
-Get Directions
-</button>
+  /* ---------------- UI ---------------- */
 
-</a>
+  return (
+    <>
+      <Navbar />
 
-</div>
+      <div className="blood-container">
 
-))}
+        <h2 className="blood-title">Available Blood Banks</h2>
 
-</div>
+        {/* ACTIONS (Emergency + Filter) */}
 
-</div>
+        <div className="blood-actions">
 
-<Footer/>
+          <button
+            className="request-btn"
+            onClick={() => navigate("/blood-emergency")}
+          >
+            🩸 Request Emergency Blood
+          </button>
 
-</>
+          <div className="blood-filter">
 
-);
+            <select
+              value={selectedBloodType}
+              onChange={(e) => setSelectedBloodType(e.target.value)}
+            >
 
+              <option value="">All Blood Types</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+        {/* BLOOD BANK GRID */}
+
+        <div className="blood-grid">
+
+          {loading && (
+            <p className="loading">Loading blood banks...</p>
+          )}
+
+          {!loading && filteredBanks.length === 0 && (
+            <p className="no-results">
+              No blood banks found for this blood type.
+            </p>
+          )}
+
+          {!loading && filteredBanks.map(bank => (
+
+            <div className="blood-card" key={bank.id}>
+
+              <h3 className="blood-name">{bank.blood_bank_name}</h3>
+
+              <p><strong>Blood Type:</strong> {bank.blood_type}</p>
+              <p><strong>Component:</strong> {bank.component}</p>
+              <p><strong>City:</strong> {bank.city}</p>
+              <p><strong>Units Available:</strong> {bank.units_available}</p>
+              <p><strong>Price:</strong> {bank.price_egp} EGP</p>
+
+              <a
+                href={bank.google_maps_link}
+                target="_blank"
+                rel="noreferrer"
+              >
+
+                <button className="direction-btn">
+                  📍 Get Directions
+                </button>
+
+              </a>
+
+            </div>
+
+          ))}
+
+        </div>
+
+      </div>
+
+      <Footer />
+    </>
+  );
 }
 
 export default BloodRequests;

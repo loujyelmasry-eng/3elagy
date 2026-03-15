@@ -64,3 +64,31 @@
       color: white;
       border-color: #2967AE;
     }
+    .map-filters{
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      margin-bottom:15px;
+      }
+      
+      .filter-btn{
+      background:white;
+      border:2px solid #2967AE;
+      color:#2967AE;
+      padding:6px 14px;
+      border-radius:8px;
+      font-size:14px;
+      cursor:pointer;
+      transition:0.2s;
+      }
+      
+      .filter-btn:hover{
+      background:#2967AE;
+      color:white;
+      }
+      
+      .filter-btn.active{
+      background:#2967AE;
+      color:white;
+      }
+      

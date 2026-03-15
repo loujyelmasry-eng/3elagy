@@ -1,247 +1,452 @@
+import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "./Profile.css";
-import { User, Mail, Phone, Droplet, FileText, TestTube, Activity } from "lucide-react";
-import { useEffect, useState } from "react";
 import { auth, db } from "../services/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
+import {
+doc,
+getDoc,
+updateDoc,
+collection,
+query,
+where,
+getDocs
+} from "firebase/firestore";
+
 function Profile() {
-  const [userData, setUserData] = useState(null);
-  useEffect(() => {
 
-    const fetchUser = async () => {
-  
-      const user = auth.currentUser;
-  
-      if (user) {
-  
-        const docRef = doc(db, "users", user.uid);
-        const docSnap = await getDoc(docRef);
-  
-        if (docSnap.exists()) {
-          setUserData(docSnap.data());
-        }
-  
-      }
-  
-    };
-  
-    fetchUser();
-  
-  }, []);
-  return (
-    <>
-      <Navbar />
+const [loading,setLoading] = useState(true);
+const [user,setUser] = useState(null);
+const [userData,setUserData] = useState(null);
 
-      <div className="profile-container">
+const [bookings,setBookings] = useState([]);
+const [bloodRequests,setBloodRequests] = useState([]);
+const [allRequests,setAllRequests] = useState([]);
 
-        {/* HEADER */}
-        <div className="profile-header">
-          <div className="profile-avatar">
-            <User size={40}/>
-          </div>
+const [editMode,setEditMode] = useState(false);
 
-          <h2>My Profile</h2>
-          <p>Your personal health dashboard</p>
-        </div>
+const [name,setName] = useState("");
+const [phone,setPhone] = useState("");
+const [bloodType,setBloodType] = useState("");
+const [age,setAge] = useState("");
 
+/* AUTH LISTENER */
 
-        <div className="profile-grid">
+useEffect(()=>{
 
-          {/* PERSONAL INFO */}
-          <div className="profile-card">
+const unsubscribe = onAuthStateChanged(auth, async (firebaseUser)=>{
 
-            <div className="card-header">
-              <h3>Personal Information</h3>
-              <button className="edit-btn">Edit Profile</button>
-            </div>
+if(!firebaseUser){
+setLoading(false);
+return;
+}
 
-            <div className="info-row">
-              <User size={18}/>
-              <div>
-                <span>Name</span>
-                <p>{userData?.name}</p>
-              </div>
-            </div>
+setUser(firebaseUser);
 
-            <div className="info-row">
-              <Mail size={18}/>
-              <div>
-                <span>Email</span>
-                <p>{userData?.email}</p>
-              </div>
-            </div>
+/* USER PROFILE */
 
-            <div className="info-row">
-              <Phone size={18}/>
-              <div>
-                <span>Phone</span>
-                <p>{userData?.phone}</p>
-              </div>
-            </div>
+const userRef = doc(db,"users",firebaseUser.uid);
+const userSnap = await getDoc(userRef);
 
-            <div className="info-row">
-              <Droplet size={18}/>
-              <div>
-                <span>Blood Type</span>
-                <p>{userData?.blood_type}</p>
-              </div>
-            </div>
+if(userSnap.exists()){
 
-          </div>
+const data = userSnap.data();
 
+setUserData(data);
+setName(data.name || "");
+setPhone(data.phone || "");
+setBloodType(data.bloodType || "");
+setAge(data.age || "");
 
-          {/* MEDICAL HISTORY */}
-          <div className="profile-card">
+}
 
-            <h3>Medical History Timeline</h3>
+/* LAB BOOKINGS */
 
-            <div className="timeline">
+const labQuery = query(
+collection(db,"lab_requests"),
+where("user_id","==",firebaseUser.uid)
+);
 
-              <div className="timeline-item">
-                <TestTube size={18}/>
-                <div>
-                  <span>Lab Test</span>
-                  <p>Complete Blood Count</p>
-                </div>
+const labSnap = await getDocs(labQuery);
 
-                <div className="timeline-status">
-                  <p>2024-12-10</p>
-                  <span className="status normal">Normal</span>
-                </div>
-              </div>
+const bookingData = labSnap.docs.map(doc=>({
+id:doc.id,
+type:"lab",
+...doc.data()
+}));
+
+setBookings(bookingData);
+
+/* BLOOD REQUESTS */
+
+const bloodQuery = query(
+collection(db,"blood_requests"),
+where("user_id","==",firebaseUser.uid)
+);
+
+const bloodSnap = await getDocs(bloodQuery);
+
+const bloodData = bloodSnap.docs.map(doc=>({
+id:doc.id,
+type:"blood",
+...doc.data()
+}));
+
+setBloodRequests(bloodData);
+
+/* MERGE REQUESTS */
+
+const merged = [...bookingData,...bloodData];
+
+merged.sort((a,b)=>{
+
+const aTime = a.created_at?.seconds || 0;
+const bTime = b.created_at?.seconds || 0;
+
+return bTime - aTime;
+
+});
+
+setAllRequests(merged);
+
+setLoading(false);
+
+});
+
+return ()=>unsubscribe();
+
+},[]);
 
 
-              <div className="timeline-item">
-                <FileText size={18}/>
-                <div>
-                  <span>Prescription</span>
-                  <p>Panadol Extra - 20 tablets</p>
-                </div>
+/* SAVE PROFILE */
 
-                <div className="timeline-status">
-                  <p>2024-12-05</p>
-                  <span className="status completed">Completed</span>
-                </div>
-              </div>
+const saveProfile = async ()=>{
 
+await updateDoc(doc(db,"users",user.uid),{
+name,
+phone,
+bloodType,
+age
+});
 
-              <div className="timeline-item">
-                <TestTube size={18}/>
-                <div>
-                  <span>Lab Test</span>
-                  <p>Lipid Profile</p>
-                </div>
+setUserData({
+...userData,
+name,
+phone,
+bloodType,
+age
+});
 
-                <div className="timeline-status">
-                  <p>2024-11-28</p>
-                  <span className="status normal">Normal</span>
-                </div>
-              </div>
+setEditMode(false);
+
+};
 
 
-              <div className="timeline-item">
-                <Activity size={18}/>
-                <div>
-                  <span>Checkup</span>
-                  <p>Annual Health Checkup</p>
-                </div>
+/* CANCEL BOOKING */
 
-                <div className="timeline-status">
-                  <p>2024-11-15</p>
-                  <span className="status completed">Completed</span>
-                </div>
-              </div>
+const cancelBooking = async(id)=>{
 
-            </div>
+await updateDoc(doc(db,"lab_requests",id),{
+status:"cancelled"
+});
 
-          </div>
+setBookings(prev =>
+prev.map(b =>
+b.id === id ? {...b,status:"cancelled"} : b
+)
+);
 
-
-          {/* MEDICAL RECORDS */}
-          <div className="profile-card">
-
-            <div className="card-header">
-              <h3>My Medical Records</h3>
-              <span className="view-all">View All Records</span>
-            </div>
-
-            <div className="record">
-              <FileText size={18}/>
-              <div>
-                <p>Blood Test Results - Nov 2024</p>
-                <span>2024-11-28 · 2.4 MB</span>
-              </div>
-            </div>
-
-            <div className="record">
-              <FileText size={18}/>
-              <div>
-                <p>X-Ray Report - Oct 2024</p>
-                <span>2024-10-15 · 1.8 MB</span>
-              </div>
-            </div>
-
-            <div className="record">
-              <FileText size={18}/>
-              <div>
-                <p>Prescription - Sept 2024</p>
-                <span>2024-09-20 · 0.5 MB</span>
-              </div>
-            </div>
-
-          </div>
+};
 
 
-          {/* RECENT REQUESTS */}
-          <div className="profile-card">
+/* STATUS STYLE */
 
-            <h3>Recent Requests</h3>
+const getStatusClass = (status)=>{
 
-            <div className="request">
-              <div>
-                <span>Medicine Search</span>
-                <p>Augmentin 1g</p>
-              </div>
+if(status==="pending") return "pending";
+if(status==="completed") return "completed";
+if(status==="approved") return "completed";
+if(status==="cancelled") return "cancelled";
 
-              <div className="request-status">
-                <span>2024-12-12</span>
-                <label className="found">Found</label>
-              </div>
-            </div>
+return "";
 
-            <div className="request">
-              <div>
-                <span>Lab Booking</span>
-                <p>Thyroid Profile</p>
-              </div>
+};
 
-              <div className="request-status">
-                <span>2024-12-10</span>
-                <label className="pending">Pending</label>
-              </div>
-            </div>
 
-            <div className="request">
-              <div>
-                <span>Pharmacy</span>
-                <p>El Ezaby - Nasr City</p>
-              </div>
+/* LOADING */
 
-              <div className="request-status">
-                <span>2024-12-08</span>
-                <label className="visited">Visited</label>
-              </div>
-            </div>
+if(loading){
 
-          </div>
+return(
+<>
+<Navbar/>
+<div style={{padding:"40px",textAlign:"center"}}>
+Loading profile...
+</div>
+<Footer/>
+</>
+);
 
-        </div>
-      </div>
+}
 
-      <Footer />
-    </>
-  );
+
+return(
+
+<>
+<Navbar/>
+
+<div className="profile-page">
+
+{/* HEADER */}
+
+<div className="profile-header">
+
+<div className="avatar">
+{userData?.name ? userData.name.charAt(0).toUpperCase() : "U"}
+</div>
+
+<h2>Hi, {userData?.name || "User"}</h2>
+
+<p>Your personal health dashboard</p>
+
+</div>
+
+
+<div className="profile-grid">
+
+{/* LEFT SIDE */}
+
+<div className="profile-left">
+
+<div className="card">
+
+<div className="card-header">
+
+<h3>Personal Information</h3>
+
+<button
+className="edit-btn"
+onClick={()=>setEditMode(!editMode)}
+>
+{editMode ? "Cancel" : "Edit Profile"}
+</button>
+
+</div>
+
+
+<div className="info-row">
+
+<span>Name</span>
+
+{editMode ? (
+<input value={name} onChange={(e)=>setName(e.target.value)}/>
+) : (
+<p>{userData?.name}</p>
+)}
+
+</div>
+
+
+<div className="info-row">
+
+<span>Email</span>
+<p>{userData?.email}</p>
+
+</div>
+
+
+<div className="info-row">
+
+<span>Phone</span>
+
+{editMode ? (
+<input value={phone} onChange={(e)=>setPhone(e.target.value)}/>
+) : (
+<p>{userData?.phone}</p>
+)}
+
+</div>
+
+
+<div className="info-row">
+
+<span>Blood Type</span>
+
+{editMode ? (
+<input value={bloodType} onChange={(e)=>setBloodType(e.target.value)}/>
+) : (
+<p>{userData?.bloodType}</p>
+)}
+
+</div>
+
+
+<div className="info-row">
+
+<span>Age</span>
+
+{editMode ? (
+<input value={age} onChange={(e)=>setAge(e.target.value)}/>
+) : (
+<p>{userData?.age}</p>
+)}
+
+</div>
+
+
+{editMode && (
+<button className="save-btn" onClick={saveProfile}>
+Save Changes
+</button>
+)}
+
+</div>
+
+</div>
+
+
+{/* RIGHT SIDE */}
+
+<div className="profile-right">
+
+{/* MEDICAL HISTORY */}
+
+<div className="card">
+
+<h3>Medical History</h3>
+
+{bookings.length===0 && (
+<p>No history yet</p>
+)}
+
+{bookings.map((booking)=>{
+
+let date="";
+
+if(booking.date && booking.date.toDate){
+date = booking.date.toDate().toLocaleDateString();
+}
+
+return(
+
+<div className="timeline-item" key={booking.id}>
+
+<div>
+
+<strong>{booking.test_name}</strong>
+<p>{booking.lab_name}</p>
+
+</div>
+
+<div>
+
+<p>{date}</p>
+<p>{booking.time}</p>
+
+</div>
+
+</div>
+
+);
+
+})}
+
+</div>
+
+
+
+{/* RECENT REQUESTS */}
+
+<div className="card">
+
+<h3>Recent Requests</h3>
+
+{allRequests.length===0 && (
+<p>No requests yet</p>
+)}
+
+{allRequests.map(req=>{
+
+if(req.type==="blood"){
+
+return(
+
+<div className="request" key={req.id}>
+
+<div>
+
+<p>Blood Request – {req.blood_type}</p>
+<small>{req.hospital_name}</small>
+
+</div>
+
+<div>
+
+<span className={`status ${getStatusClass(req.status)}`}>
+{req.status}
+</span>
+
+</div>
+
+</div>
+
+);
+
+}
+
+return(
+
+<div className="request" key={req.id}>
+
+<div>
+
+<p>Lab Booking – {req.test_name}</p>
+<small>{req.lab_name}</small>
+
+</div>
+
+<div>
+
+<span className={`status ${getStatusClass(req.status)}`}>
+{req.status}
+</span>
+
+{req.status==="pending" && (
+
+<button
+className="cancel-btn"
+onClick={()=>cancelBooking(req.id)}
+>
+
+Cancel
+
+</button>
+
+)}
+
+</div>
+
+</div>
+
+);
+
+})}
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<Footer/>
+
+</>
+
+);
+
 }
 
 export default Profile;

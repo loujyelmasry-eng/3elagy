@@ -11,11 +11,15 @@
     margin-bottom:30px;
     }
     
-    .blood-filter{
-    display:flex;
-    justify-content:center;
-    margin-bottom:30px;
-    }
+    .blood-filter select{
+        padding:12px 16px;
+        border-radius:8px;
+        border:1px solid #ddd;
+        font-size:15px;
+        background:white;
+        box-shadow:0 2px 6px rgba(0,0,0,0.05);
+        }
+        
     
     .blood-filter select{
     padding:12px 16px;
@@ -32,16 +36,18 @@
     }
     
     .blood-card{
-    background:white;
-    padding:25px;
-    border-radius:12px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.08);
-    transition:0.2s;
-    }
-    
-    .blood-card:hover{
-    transform:translateY(-5px);
-    }
+        background:white;
+        border-radius:14px;
+        padding:24px;
+        box-shadow:0 8px 20px rgba(0,0,0,0.06);
+        transition:all 0.25s ease;
+        }
+        
+        .blood-card:hover{
+        transform:translateY(-4px);
+        box-shadow:0 12px 28px rgba(0,0,0,0.08);
+        }
+        
     
     .blood-name{
     font-size:20px;
@@ -50,16 +56,73 @@
     }
     
     .direction-btn{
-    margin-top:15px;
-    padding:10px 16px;
-    background:#2967AE;
-    color:white;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-    font-weight:500;
-    }
-    
-    .direction-btn:hover{
-    background:#1f4f87;
-    }
+        background:#2c5ea8;
+        color:white;
+        border:none;
+        padding:10px 16px;
+        border-radius:8px;
+        cursor:pointer;
+        font-weight:500;
+        transition:0.2s;
+        }
+        
+        .direction-btn:hover{
+        background:#1e4b8e;
+        }
+        .emergency-btn{
+            background:#e63946;
+            color:white;
+            border:none;
+            padding:12px 20px;
+            border-radius:8px;
+            font-weight:600;
+            cursor:pointer;
+            margin-top:10px;
+            }
+            
+            .emergency-btn:hover{
+            background:#c82333;
+            }
+            .blood-actions{
+                display:flex;
+                flex-direction:column;
+                align-items:center;
+                gap:16px;
+                margin-bottom:30px;
+                }
+                .blood-actions{
+                    display:flex;
+                    flex-direction:column;
+                    align-items:center;
+                    gap:15px;
+                    margin-bottom:30px;
+                    }
+                    
+                    .request-btn{
+                    background:#e53935;
+                    color:white;
+                    border:none;
+                    padding:12px 22px;
+                    border-radius:8px;
+                    font-weight:600;
+                    cursor:pointer;
+                    }
+                    
+                    .request-btn:hover{
+                    background:#c62828;
+                    }
+                    
+                    .blood-filter select{
+                    padding:8px 12px;
+                    border-radius:6px;
+                    border:1px solid #ccc;
+                    font-size:14px;
+                    }
+                    .blood-actions{
+                        display:flex;
+                        flex-direction:column;
+                        align-items:center;
+                        gap:16px;
+                        margin-bottom:30px;
+                        }
+                        
